@@ -1,1 +1,60 @@
 @import 'tailwindcss';
+
+@theme {
+	--color-button: #2b2b47;
+	--color-border: #3a3a55;
+
+	--animate-fadeIn: fadeIn 0.3s ease-in-out forwards;
+	--animate-fadeIn-blurOut: fadeInBlurOut 0.3s ease forwards;
+	--animate-fadeIn-scale: fadeInScale 0.15s ease-in-out forwards;
+}
+
+@layer components {
+	.border-primary {
+		@apply border border-border;
+	}
+}
+
+html,
+body {
+	background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+	font-family: 'Poppins', sans-serif;
+	color: white;
+	user-select: none;
+}
+
+.app {
+	width: 100vw;
+	height: 100vh;
+}
+
+@keyframes fadeIn {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes fadeInBlurOut {
+	0% {
+		opacity: 0;
+		filter: blur(4px);
+	}
+	100% {
+		opacity: 1;
+		filter: blur(0);
+	}
+}
+
+@keyframes fadeInScale {
+	0% {
+		opacity: 0;
+		transform: scale(0.9);
+	}
+	100% {
+		opacity: 1;
+		transform: scale(1);
+	}
+}

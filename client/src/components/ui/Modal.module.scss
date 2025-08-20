@@ -1,0 +1,33 @@
+.closing {
+	animation: fadeOut 200ms ease forwards !important;
+}
+.closingSlow {
+	animation: fadeOut 300ms ease forwards !important;
+}
+
+.backdrop {
+	background-color: rgba(0, 0, 0, 0.5);
+	animation: fadeIn 200ms ease forwards;
+
+	.closing {
+		animation: fadeOut 200ms ease forwards !important;
+	}
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes fadeOut {
+	from {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
+	}
+}

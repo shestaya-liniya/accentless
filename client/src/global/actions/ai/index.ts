@@ -3,7 +3,10 @@ import AiApi from '@/api/ai'
 import { setGlobalState } from '@/global'
 
 addActionHandler('fetchSamplePhrase', async global => {
-	setGlobalState('samplePhrase', 'isLoading', true)
+	setGlobalState('samplePhrase', {
+		isLoading: true,
+		result: undefined,
+	})
 
 	const res = await AiApi.getSample({
 		category: global.difficulty,
