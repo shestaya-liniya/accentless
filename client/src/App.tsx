@@ -1,9 +1,27 @@
-import type { Component } from 'solid-js';
+import { onMount, Show } from 'solid-js'
+import { getActions } from '@/global/actions'
+import { getGlobal } from '@/global'
 
-const App: Component = () => {
-  return (
-    <p class="text-4xl text-green-700 text-center py-20">Hello world!</p>
-  );
-};
+const App = () => {
+	const global = getGlobal()
+	const { fetchSamplePhrase } = getActions()
 
-export default App;
+	onMount(() => {
+		fetchSamplePhrase()
+	})
+
+	return (
+		<div>
+			<Show when={global.samplePhrase.result} fallback={<p>Loading...</p>}>
+				{result => (
+					<div>
+						<div>{result().text}</div>
+						<div>{result().ipa}</div>
+					</div>
+				)}
+			</Show>
+		</div>
+	)
+}
+
+export default App
