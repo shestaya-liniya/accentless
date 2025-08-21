@@ -5,7 +5,7 @@
 	--color-border: #3a3a55;
 
 	--animate-fadeIn: fadeIn 0.3s ease-in-out forwards;
-	--animate-fadeIn-blurOut: fadeInBlurOut 0.3s ease forwards;
+	--animate-fadeIn-blurOut: fadeInBlurOut 0.15s linear forwards;
 	--animate-fadeIn-scale: fadeInScale 0.15s ease-in-out forwards;
 }
 

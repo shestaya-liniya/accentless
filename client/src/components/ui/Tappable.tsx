@@ -8,6 +8,7 @@ type OwnProps = {
 	onPointerDown?: () => void
 	children?: JSX.Element
 	class?: string
+	classList?: Record<string, boolean>
 	fullWidth?: boolean
 	forceRipple?: boolean
 }
@@ -64,6 +65,7 @@ const Tappable = (props: OwnProps) => {
 			onPointerDown={handlePointerDown}
 			ref={containerRef}
 			class={containerClass}
+			classList={props.classList}
 		>
 			{props.children}
 		</div>
