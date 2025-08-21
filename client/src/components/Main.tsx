@@ -8,6 +8,7 @@ import Tappable from '@/components/ui/Tappable'
 import Button from '@/components/ui/Button'
 import NextIcon from '@/assets/next.svg'
 import GithubIcon from '@/assets/github.svg'
+import { syntheseBrowserSpeech } from '@/lib/utils/browser-speech'
 
 const Main = () => {
 	const global = getGlobal()
@@ -25,6 +26,14 @@ const Main = () => {
 			setHint('Push to continue')
 		}
 		setIsRecording(!isRecording())
+	}
+
+	const handlePlaySample = () => {
+		const sampleText = ownState().result?.text
+
+		if (sampleText) {
+			syntheseBrowserSpeech(sampleText.join('.'))
+		}
 	}
 
 	const handleSkip = () => {
@@ -74,7 +83,7 @@ const Main = () => {
 										Score 0
 									</Button>
 								</div>
-								<Tappable class="rounded-full p-2" onClick={() => {}}>
+								<Tappable class="rounded-full p-2" onClick={handlePlaySample}>
 									<VoiceChatIcon class="h-6 w-6 relative left-[1px] top-[1px]" />
 								</Tappable>
 								<div class="flex justify-end">
