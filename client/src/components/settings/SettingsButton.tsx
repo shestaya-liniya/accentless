@@ -2,10 +2,11 @@ import Button from '@/components/ui/Button'
 import SettingsIcon from '@/assets/settings-outline.svg'
 import BarsIcon from '@/assets/poll.svg'
 import Modal, { type ModalAction } from '@/components/ui/Modal'
-import type { XY } from '@/lib/const'
+
 import LanguageIcon from '@/assets/language.svg'
 
 import { createSignal } from 'solid-js'
+import type { XY } from '@/lib/type'
 
 const SettingsButton = () => {
 	const [isModalOpen, setIsModalOpen] = createSignal(false)

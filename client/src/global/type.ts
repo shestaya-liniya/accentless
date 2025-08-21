@@ -1,4 +1,4 @@
-import type { SampleDifficultyType } from '@/lib/const'
+import type { SampleDifficultyType } from '@/lib/type'
 
 export type GlobalState = {
 	lang: 'en'

@@ -1,10 +1,9 @@
 import { createEffect, createSignal, For, on, type ParentProps } from 'solid-js'
 import { Portal, Show } from 'solid-js/web'
 
-import type { Icon, NoneToVoid, XY } from '@/lib/const'
-
 import styles from './Modal.module.scss'
 import Tappable from '@/components/ui/Tappable'
+import type { Icon, NoneToVoid, XY } from '@/lib/type'
 
 export type ModalAction<T = string> = {
 	title: T

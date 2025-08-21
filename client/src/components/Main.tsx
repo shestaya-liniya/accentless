@@ -9,6 +9,7 @@ import Button from '@/components/ui/Button'
 import NextIcon from '@/assets/next.svg'
 import GithubIcon from '@/assets/github.svg'
 import { syntheseBrowserSpeech } from '@/lib/utils/browser-speech'
+import { AUTHORS, GUTHUB_LINK } from '@/lib/const'
 
 const Main = () => {
 	const global = getGlobal()
@@ -48,11 +49,7 @@ const Main = () => {
 				</div>
 				<div
 					class="absolute right-2 top-2 cursor-pointer"
-					onClick={() =>
-						window.open(
-							'https://github.com/shestaya-liniya/ai-pronunciation-trainer-better-ui',
-						)
-					}
+					onClick={() => window.open(GUTHUB_LINK)}
 				>
 					<GithubIcon class="h-10 w-10" />
 				</div>
@@ -109,7 +106,7 @@ const Main = () => {
 				/>
 			</div>
 			<div class="absolute bottom-4 right-4 text-xs text-white/50">
-				By Thiago Lobato and Andrei Silin.
+				{AUTHORS}
 			</div>
 		</div>
 	)
