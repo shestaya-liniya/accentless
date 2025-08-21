@@ -2,7 +2,7 @@ import { addActionHandler } from '@/global/actions'
 import AiApi from '@/api/ai'
 import { setGlobalState } from '@/global'
 
-addActionHandler('fetchSamplePhrase', async global => {
+addActionHandler('fetchSamplePhrase', async (global, _actions, payload) => {
 	setGlobalState('samplePhrase', {
 		isLoading: true,
 		result: undefined,
@@ -12,6 +12,8 @@ addActionHandler('fetchSamplePhrase', async global => {
 		category: global.difficulty,
 		language: global.lang,
 	})
+
+	payload?.callback()
 
 	setGlobalState('samplePhrase', {
 		isLoading: false,
@@ -25,3 +27,10 @@ addActionHandler('fetchSamplePhrase', async global => {
 addActionHandler('setSampleDifficulty', async (_global, _actions, payload) => {
 	setGlobalState('difficulty', payload)
 })
+
+addActionHandler(
+	'getAccuracyFromRecordedAudio',
+	async (_global, _actions, payload) => {
+		const res = await AiApi.getAccuracyFromRecordedAudio(payload)
+	},
+)

@@ -1,5 +1,10 @@
 import axios, { type AxiosInstance } from 'axios'
-import type { GetSampleRequestBody, GetSampleResponse } from './types'
+import type {
+	GetAccuracyFromRecordedAudioBody,
+	GetAccuracyFromRecordedAudioResponse,
+	GetSampleRequestBody,
+	GetSampleResponse,
+} from './types'
 
 class AiApi {
 	private instance: AxiosInstance
@@ -16,6 +21,12 @@ class AiApi {
 
 	async getSample(body: GetSampleRequestBody): Promise<GetSampleResponse> {
 		return this.instance.post('getSample', body)
+	}
+
+	async getAccuracyFromRecordedAudio(
+		body: GetAccuracyFromRecordedAudioBody,
+	): Promise<GetAccuracyFromRecordedAudioResponse> {
+		return this.instance.post('GetAccuracyFromRecordedAudio', body)
 	}
 }
 

@@ -10,23 +10,42 @@ import NextIcon from '@/assets/next.svg'
 import GithubIcon from '@/assets/github.svg'
 import { syntheseBrowserSpeech } from '@/lib/utils/browser-speech'
 import { AUTHORS, GUTHUB_LINK } from '@/lib/const'
+import { useAudioRecorder } from '@/lib/hooks/useAudioRecorder'
 
 const Main = () => {
 	const global = getGlobal()
 	const ownState = createMemo(() => global.samplePhrase)
-	const { fetchSamplePhrase } = getActions()
+	const { fetchSamplePhrase, getAccuracyFromRecordedAudio } = getActions()
+
+	const { status, startRecording, stopRecording } = useAudioRecorder()
 
 	const [hint, setHint] = createSignal('Push to start')
-	const [isRecording, setIsRecording] = createSignal(false)
 
 	const handleToggleRecording = () => {
-		if (!isRecording()) {
-			fetchSamplePhrase()
+		if (status() !== 'recording') {
+			const handleStop = (audioUrl: string, audioBase64: string) => {
+				const samplePhrase = global.samplePhrase.result?.text
+				if (!samplePhrase) return
+
+				const audio = new Audio(audioUrl)
+				audio.play()
+
+				getAccuracyFromRecordedAudio({
+					base64Audio: audioBase64,
+					language: global.lang,
+					title: samplePhrase.join('.'),
+				})
+			}
+
+			fetchSamplePhrase({
+				callback: () => startRecording(handleStop),
+			})
+
 			setHint('Push again when done')
-		} else {
+		} else if (status() === 'recording') {	
+			stopRecording()
 			setHint('Push to continue')
 		}
-		setIsRecording(!isRecording())
 	}
 
 	const handlePlaySample = () => {
@@ -100,7 +119,7 @@ const Main = () => {
 			</div>
 			<div class="flex-1 flex items-center justify-center py-12">
 				<VoiceVisualizer
-					isRecording={isRecording()}
+					isRecording={status() === 'recording'}
 					toggleIsRecording={handleToggleRecording}
 					hint={hint()}
 				/>
