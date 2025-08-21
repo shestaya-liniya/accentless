@@ -1,13 +1,5 @@
 import SettingsButton from '@/components/settings/SettingsButton'
-import {
-	createEffect,
-	createMemo,
-	createSignal,
-	Match,
-	on,
-	Show,
-	Switch,
-} from 'solid-js'
+import { createMemo, createSignal, Match, Switch } from 'solid-js'
 import VoiceVisualizer from '@/components/ui/VoiceVisualizer'
 import { getGlobal } from '@/global'
 import { getActions } from '@/global/actions'
@@ -21,11 +13,15 @@ const Main = () => {
 	const ownState = createMemo(() => global.samplePhrase)
 	const { fetchSamplePhrase } = getActions()
 
+	const [hint, setHint] = createSignal('Push to start')
 	const [isRecording, setIsRecording] = createSignal(false)
 
 	const handleToggleRecording = () => {
 		if (!isRecording()) {
 			fetchSamplePhrase()
+			setHint('Push again when done')
+		} else {
+			setHint('Push to continue')
 		}
 		setIsRecording(!isRecording())
 	}
@@ -90,7 +86,7 @@ const Main = () => {
 					<VoiceVisualizer
 						isRecording={isRecording()}
 						toggleIsRecording={handleToggleRecording}
-						shouldShowHint={!ownState().result && !ownState().isLoading}
+						hint={hint()}
 					/>
 				</div>
 			</div>

@@ -10,7 +10,7 @@ interface AudioPermissionResult {
 type OwnProps = {
 	isRecording: boolean
 	toggleIsRecording: () => void
-	shouldShowHint?: boolean
+	hint?: string
 }
 
 const VoiceVisualizer = (props: OwnProps) => {
@@ -233,6 +233,7 @@ const VoiceVisualizer = (props: OwnProps) => {
 		<div
 			style={{
 				display: 'flex',
+				position: 'relative',
 				'flex-direction': 'column',
 				'align-items': 'center',
 				'justify-content': 'center',
@@ -301,12 +302,14 @@ const VoiceVisualizer = (props: OwnProps) => {
 						</path>
 					</svg>
 				</div>
-				<Show when={props.shouldShowHint}>
-					<div class="absolute bottom-0 left-1/2 -translate-x-1/2">
-						<ShinyText text="Push to start" />
-					</div>
-				</Show>
 			</div>
+			<Show when={props.hint}>
+				{hint => (
+					<div class="absolute -bottom-8 left-1/2 -translate-x-1/2">
+						<ShinyText text={hint()} />
+					</div>
+				)}
+			</Show>
 		</div>
 	)
 }

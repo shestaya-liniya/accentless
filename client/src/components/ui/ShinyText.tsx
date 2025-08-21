@@ -12,7 +12,9 @@ const ShinyText = (props: OwnProps) => {
 
 	return (
 		<div
-			class={`shiny-text ${props.disabled ? 'disabled' : ''} ${props.class}`}
+			class={`shiny-text whitespace-nowrap ${
+				props.disabled ? 'disabled' : ''
+			} ${props.class}`}
 			style={{ 'animation-duration': animationDuration }}
 		>
 			{props.text}
