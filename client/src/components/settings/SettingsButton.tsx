@@ -1,15 +1,14 @@
-import Button from '@/components/ui/Button'
-import SettingsIcon from '@/assets/settings-outline.svg'
-import BarsIcon from '@/assets/poll.svg'
-import Modal, { type ModalAction } from '@/components/ui/Modal'
+import { createEffect, createMemo, createSignal, on, onMount } from 'solid-js'
 
 import LanguageIcon from '@/assets/language.svg'
-
-import { createEffect, createMemo, createSignal, on, onMount } from 'solid-js'
-import type { SampleDifficultyType, XY } from '@/lib/type'
+import BarsIcon from '@/assets/poll.svg'
+import SettingsIcon from '@/assets/settings-outline.svg'
+import Button from '@/components/ui/Button'
+import Modal, { type ModalAction } from '@/components/ui/Modal'
 import { getGlobal } from '@/global'
 import { getActions } from '@/global/actions'
 import { SampleDifficulty } from '@/lib/const'
+import type { SampleDifficultyType, XY } from '@/lib/type'
 
 const SettingsButton = () => {
 	const global = getGlobal()

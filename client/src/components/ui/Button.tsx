@@ -1,6 +1,7 @@
-import Tappable from '@/components/ui/Tappable'
 import type { ParentProps } from 'solid-js'
 import { twMerge } from 'tailwind-merge'
+
+import Tappable from '@/components/ui/Tappable'
 
 type OwnProps = ParentProps<{
 	onClick: () => void

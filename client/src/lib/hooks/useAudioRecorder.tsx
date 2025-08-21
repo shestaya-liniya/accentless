@@ -1,5 +1,6 @@
-import { blobToBase64 } from '@/lib/utils/formats'
 import { createSignal } from 'solid-js'
+
+import { blobToBase64 } from '@/lib/utils/formats'
 
 export const useAudioRecorder = () => {
 	const [status, setStatus] = createSignal<

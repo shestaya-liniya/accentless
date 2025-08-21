@@ -1,6 +1,7 @@
-import type { NoneToVoid, SampleDifficultyType } from '@/lib/type'
-import type { GlobalState } from '../type'
 import type { GetAccuracyFromRecordedAudioBody } from '@/api/ai/types'
+import type { NoneToVoid, SampleDifficultyType } from '@/lib/type'
+
+import type { GlobalState } from '../type'
 
 export type ActionHandler<T extends keyof ActionsPayload> = (
 	global: GlobalState,

@@ -1,6 +1,6 @@
-import { addActionHandler } from '@/global/actions'
 import AiApi from '@/api/ai'
 import { setGlobalState } from '@/global'
+import { addActionHandler } from '@/global/actions'
 
 addActionHandler('fetchSamplePhrase', async (global, _actions, payload) => {
 	setGlobalState('samplePhrase', {
@@ -32,5 +32,6 @@ addActionHandler(
 	'getAccuracyFromRecordedAudio',
 	async (_global, _actions, payload) => {
 		const res = await AiApi.getAccuracyFromRecordedAudio(payload)
+		console.log(res)
 	},
 )

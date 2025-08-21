@@ -1,4 +1,5 @@
 import axios, { type AxiosInstance } from 'axios'
+
 import type {
 	GetAccuracyFromRecordedAudioBody,
 	GetAccuracyFromRecordedAudioResponse,

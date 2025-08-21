@@ -1,16 +1,17 @@
-import SettingsButton from '@/components/settings/SettingsButton'
 import { createMemo, createSignal, Match, Switch } from 'solid-js'
+
+import GithubIcon from '@/assets/github.svg'
+import NextIcon from '@/assets/next.svg'
+import VoiceChatIcon from '@/assets/voice-chat.svg'
+import SettingsButton from '@/components/settings/SettingsButton'
+import Button from '@/components/ui/Button'
+import Tappable from '@/components/ui/Tappable'
 import VoiceVisualizer from '@/components/ui/VoiceVisualizer'
 import { getGlobal } from '@/global'
 import { getActions } from '@/global/actions'
-import VoiceChatIcon from '@/assets/voice-chat.svg'
-import Tappable from '@/components/ui/Tappable'
-import Button from '@/components/ui/Button'
-import NextIcon from '@/assets/next.svg'
-import GithubIcon from '@/assets/github.svg'
-import { syntheseBrowserSpeech } from '@/lib/utils/browser-speech'
 import { AUTHORS, GUTHUB_LINK } from '@/lib/const'
 import { useAudioRecorder } from '@/lib/hooks/useAudioRecorder'
+import { syntheseBrowserSpeech } from '@/lib/utils/browser-speech'
 
 const Main = () => {
 	const global = getGlobal()

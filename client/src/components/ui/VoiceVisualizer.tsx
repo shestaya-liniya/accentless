@@ -1,6 +1,7 @@
-import ShinyText from '@/components/ui/ShinyText'
 import { createSignal, onCleanup, onMount, Show } from 'solid-js'
+
 import MicrophoneIcon from '@/assets/microphone-alt.svg'
+import ShinyText from '@/components/ui/ShinyText'
 
 interface AudioPermissionResult {
 	granted: boolean
@@ -37,6 +38,7 @@ const VoiceVisualizer = (props: OwnProps) => {
 
 	// Type guard for AudioContext support
 	const isAudioContextSupported = (): boolean => {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		return !!(window.AudioContext || (window as any).webkitAudioContext)
 	}
 
@@ -76,6 +78,7 @@ const VoiceVisualizer = (props: OwnProps) => {
 	): Promise<void> => {
 		try {
 			const AudioContextClass =
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				window.AudioContext || (window as any).webkitAudioContext
 			if (!AudioContextClass) {
 				throw new Error('AudioContext not available')

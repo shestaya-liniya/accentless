@@ -1,5 +1,5 @@
 import { globalState } from '..'
-import type { ActionsPayload, ActionHandler, Actions } from './type'
+import type { ActionHandler, Actions,ActionsPayload } from './type'
 
 const actionHandlers: { [T in keyof ActionsPayload]?: ActionHandler<T>[] } = {}
 const actions = {} as Actions
