@@ -1,5 +1,6 @@
 import ShinyText from '@/components/ui/ShinyText'
 import { createSignal, onCleanup, onMount, Show } from 'solid-js'
+import MicrophoneIcon from '@/assets/microphone-alt.svg'
 
 interface AudioPermissionResult {
 	granted: boolean
@@ -211,7 +212,6 @@ const VoiceVisualizer = (props: OwnProps) => {
 	const blobContainerStyle = () => ({
 		position: 'relative' as const,
 		cursor: 'pointer' as const,
-		opacity: opacity(),
 		transform: `scale(${scale()})`,
 		transformOrigin: 'center',
 		transition: 'transform 100ms ease-out, opacity 300ms ease',
@@ -227,6 +227,7 @@ const VoiceVisualizer = (props: OwnProps) => {
 		width: '100%',
 		height: '100%',
 		filter: 'drop-shadow(0 0 20px rgba(255, 107, 107, 0.4))',
+		opacity: opacity(),
 	})
 
 	return (
@@ -301,6 +302,9 @@ const VoiceVisualizer = (props: OwnProps) => {
 							)}
 						</path>
 					</svg>
+					<Show when={props.isRecording}>
+						<MicrophoneIcon class="absolute top-1/2 left-1/2 -translate-1/2 h-12 w-12 rounded-full p-3 text-red-500 bg-white animate-fadeIn-scale" />
+					</Show>
 				</div>
 			</div>
 			<Show when={props.hint}>
