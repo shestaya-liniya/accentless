@@ -21,6 +21,7 @@ body {
 	font-family: 'Poppins', sans-serif;
 	color: white;
 	user-select: none;
+	overscroll-behavior: none;
 }
 
 .app {
