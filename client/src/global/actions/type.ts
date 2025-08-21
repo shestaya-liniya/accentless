@@ -1,3 +1,4 @@
+import type { SampleDifficultyType } from '@/lib/type'
 import type { GlobalState } from '../type'
 
 export type ActionHandler<T extends keyof ActionsPayload> = (
@@ -14,4 +15,5 @@ export type Actions = {
 
 export interface ActionsPayload {
 	fetchSamplePhrase: undefined
+	setSampleDifficulty: SampleDifficultyType
 }

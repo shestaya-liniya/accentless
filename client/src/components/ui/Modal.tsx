@@ -7,7 +7,7 @@ import type { Icon, NoneToVoid, XY } from '@/lib/type'
 
 export type ModalAction<T = string> = {
 	title: T
-	Icon: Icon
+	Icon?: Icon
 	onClick?: NoneToVoid
 	isSelected?: boolean
 	closeOnClick?: boolean
@@ -75,7 +75,7 @@ const Modal = (props: OwnProps) => {
 	)
 
 	const renderAction = (action: ModalAction) => {
-		const closeOnClick = action.closeOnClick ?? true
+		const closeOnClick = action.closeOnClick ?? false
 
 		const handleClick = () => {
 			action.onClick?.()
@@ -88,8 +88,12 @@ const Modal = (props: OwnProps) => {
 			<Tappable
 				onClick={handleClick}
 				class="inline-flex items-center gap-3 px-4 py-3 capitalize text-[15px]"
+				classList={{
+					'bg-accent': action.isSelected ?? false,
+					'justify-center': !action.Icon,
+				}}
 			>
-				<div>{action.Icon?.({ class: `h-5 w-5` })}</div>
+				<Show when={action.Icon}>{action.Icon?.({ class: `h-5 w-5` })}</Show>
 				<div>{action.title}</div>
 			</Tappable>
 		)

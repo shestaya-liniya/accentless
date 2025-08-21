@@ -5,28 +5,26 @@ import Modal, { type ModalAction } from '@/components/ui/Modal'
 
 import LanguageIcon from '@/assets/language.svg'
 
-import { createSignal } from 'solid-js'
-import type { XY } from '@/lib/type'
+import { createEffect, createMemo, createSignal, on, onMount } from 'solid-js'
+import type { SampleDifficultyType, XY } from '@/lib/type'
+import { getGlobal } from '@/global'
+import { getActions } from '@/global/actions'
+import { SampleDifficulty } from '@/lib/const'
 
 const SettingsButton = () => {
+	const global = getGlobal()
+	const { setSampleDifficulty } = getActions()
+
 	const [isModalOpen, setIsModalOpen] = createSignal(false)
 	const [modalPosition, setModalPosition] = createSignal<XY | undefined>(
 		undefined,
 	)
+	const [modalActions, setModalActions] = createSignal<
+		ModalAction[] | undefined
+	>(undefined)
 	const [isIconRotated, setIsIconRotated] = createSignal(false)
 
 	let buttonRef: HTMLDivElement | undefined
-
-	const modalActions: ModalAction[] = [
-		{
-			title: 'difficulty',
-			Icon: BarsIcon,
-		},
-		{
-			title: 'language',
-			Icon: LanguageIcon,
-		},
-	]
 
 	const handleClick = () => {
 		if (!buttonRef) return
@@ -41,6 +39,60 @@ const SettingsButton = () => {
 			y: rect.bottom + 8,
 		})
 	}
+
+	const handleClose = () => {
+		setModalActions(initialActions)
+		setIsModalOpen(false)
+	}
+
+	const initialActions: ModalAction[] = [
+		{
+			title: 'difficulty',
+			Icon: BarsIcon,
+			onClick: () => setModalActions(difficultyActions()),
+		},
+		{
+			title: 'language',
+			Icon: LanguageIcon,
+			onClick: () => setModalActions(languageActions),
+		},
+	]
+
+	const handleSetDifficulty = (difficulty: SampleDifficultyType) => {
+		setSampleDifficulty(difficulty)
+	}
+
+	const difficultyActions = createMemo(() =>
+		Object.entries(SampleDifficulty).map(([key, value]) => ({
+			title: key.toLowerCase(),
+			isSelected: global.difficulty === value,
+			onClick: () => handleSetDifficulty(value),
+		})),
+	)
+
+	// Needed to sync modal selected actions state with global state, should refactor somehow
+	createEffect(
+		on(
+			() => global.difficulty,
+			() => {
+				setModalActions(difficultyActions())
+			},
+		),
+	)
+
+	const languageActions: ModalAction[] = [
+		{
+			title: 'english',
+			isSelected: global.lang === 'en',
+		},
+		{
+			title: 'german',
+		},
+	]
+
+	onMount(() => {
+		setModalActions(initialActions)
+	})
 
 	return (
 		<>
@@ -58,9 +110,9 @@ const SettingsButton = () => {
 
 			<Modal
 				isOpen={isModalOpen()}
-				onClose={() => setIsModalOpen(false)}
+				onClose={handleClose}
 				onBeforeClose={() => setIsIconRotated(false)}
-				actions={modalActions}
+				actions={modalActions()}
 				position={modalPosition()}
 				centered
 			/>

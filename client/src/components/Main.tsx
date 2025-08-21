@@ -63,7 +63,7 @@ const Main = () => {
 						</div>
 					</Match>
 					<Match when={ownState().result}>
-						<div class="px-4 flex flex-col items-center justify-center animate-fadeIn-blurOut">
+						<div class="px-4 flex flex-col items-center justify-center max-w-[800px] animate-fadeIn-blurOut">
 							<div class="text-center text-2xl select-text">
 								{ownState().result?.text}
 							</div>

@@ -21,3 +21,7 @@ addActionHandler('fetchSamplePhrase', async global => {
 		},
 	})
 })
+
+addActionHandler('setSampleDifficulty', async (_global, _actions, payload) => {
+	setGlobalState('difficulty', payload)
+})
