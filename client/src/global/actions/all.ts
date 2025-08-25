@@ -1,1 +1,1 @@
-import './ai/index'
+import './api/ai'

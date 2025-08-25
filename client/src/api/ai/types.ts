@@ -12,33 +12,86 @@ export type GetSampleResponse = {
 }
 
 export type GetAccuracyFromRecordedAudioBody = {
-	base64Audio: string
-	language: 'en'
-	title: string
+	audio_data: Blob
+	sample_text: string
 }
 
-/* "real_transcript": " It's against my morals",
-  "ipa_transcript": "ɪts əˈgɛnst maɪ ˈmɔrəlz",
-  "pronunciation_accuracy": "100",
-  "real_transcripts": "It's against my morals.",
-  "matched_transcripts": "It's against my morals",
-  "real_transcripts_ipa": "ɪts əˈgɛnst maɪ ˈmɔrəlz.",
-  "matched_transcripts_ipa": "ɪts əˈgɛnst maɪ ˈmɔrəlz",
-  "pair_accuracy_category": "0 0 0 0",
-  "start_time": "0.0 0.59 0.91 1.17",
-  "end_time": "0.69 1.01 1.27 1.63",
-  "is_letter_correct_all_words": "1111 1111111 11 1111111 " */
+export interface GetAccuracyFromRecordedAudioResponse {
+	DisplayText: string
+	Duration: number
+	NBest: NBestItem[]
+	Offset: number
+	RecognitionStatus:
+		| 'Success'
+		| 'NoMatch'
+		| 'InitialSilenceTimeout'
+		| 'BabbleTimeout'
+		| 'Error'
+	SNR: number
+}
 
-export type GetAccuracyFromRecordedAudioResponse = {
-	real_transcript: string
-	ipa_transcript: string
-	pronunciation_accuracy: string
-	real_transcripts: string
-	matched_transcripts: string
-	real_transcripts_ipa: string
-	matched_transcripts_ipa: string
-	pair_accuracy_category: string
-	start_time: string
-	end_time: string
-	is_letter_correct_all_words: string
+export interface NBestItem {
+	AccuracyScore: number
+	CompletenessScore: number
+	Confidence: number
+	Display: string
+	FluencyScore: number
+	ITN: string
+	Lexical: string
+	MaskedITN: string
+	PronScore: number
+	ProsodyScore: number
+	Words: WordAssessment[]
+}
+
+export interface WordAssessment {
+	AccuracyScore: number
+	Confidence: number
+	Duration: number
+	ErrorType: string
+	Feedback: Feedback
+	Offset: number
+	Phonemes: PhonemeAssessment[]
+	Syllables: SyllableAssessment[]
+	Word: string
+}
+
+export interface Feedback {
+	Prosody: {
+		Break: {
+			BreakLength: number
+			ErrorTypes: string[]
+			MissingBreak?: { Confidence: number }
+			UnexpectedBreak?: { Confidence: number }
+		}
+		Intonation: {
+			ErrorTypes: string[]
+			Monotone: {
+				Confidence: number
+				SyllablePitchDeltaConfidence: number
+				WordPitchSlopeConfidence: number
+			}
+		}
+	}
+}
+
+export interface PhonemeAssessment {
+	AccuracyScore: number
+	Duration: number
+	NBestPhonemes: NBestPhoneme[]
+	Offset: number
+	Phoneme: string
+}
+
+export interface NBestPhoneme {
+	Phoneme: string
+	Score: number
+}
+
+export interface SyllableAssessment {
+	AccuracyScore: number
+	Duration: number
+	Grapheme: string
+	Offset: number
+	Syllable: string
 }

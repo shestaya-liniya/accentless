@@ -21,13 +21,19 @@ class AiApi {
 	}
 
 	async getSample(body: GetSampleRequestBody): Promise<GetSampleResponse> {
-		return this.instance.post('getSample', body)
+		return this.instance.post('sample/get', body)
 	}
 
 	async getAccuracyFromRecordedAudio(
 		body: GetAccuracyFromRecordedAudioBody,
 	): Promise<GetAccuracyFromRecordedAudioResponse> {
-		return this.instance.post('GetAccuracyFromRecordedAudio', body)
+		const formData = new FormData()
+		formData.append('audio_data', body.audio_data)
+		formData.append('sample_text', body.sample_text)
+
+		return this.instance.post('azure/analyzeSpeech', formData, {
+			headers: { 'Content-Type': 'multipart/form-data' },
+		})
 	}
 }
 

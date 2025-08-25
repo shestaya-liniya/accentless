@@ -1,6 +1,6 @@
 import { createSignal } from 'solid-js'
 
-import { blobToBase64 } from '@/lib/utils/formats'
+import { convertToWAV } from '@/lib/utils/audio-to-wav'
 
 export const useAudioRecorder = () => {
 	const [status, setStatus] = createSignal<
@@ -14,18 +14,29 @@ export const useAudioRecorder = () => {
 	const mediaStreamConstraints = {
 		audio: {
 			channelCount: 1,
-			sampleRate: 48000,
+			sampleRate: 16000, // 16 kHz (Azure requirement https://learn.microsoft.com/en-us/azure/ai-services/speech-service/rest-speech-to-text-short#audio-formats)
+			echoCancellation: true,
+			noiseSuppression: true,
+			autoGainControl: true,
 		},
 	}
 
+	const mediaRecorderOptions = {
+		audioBitsPerSecond: 256000, // 256 kbps as recommended by Azure
+	}
+
 	const startRecording = (
-		onStopCallback: (audioUrl: string, audioBase64: string) => void,
+		onStopCallback: (audioUrl: string, audioWav: Blob) => void,
 	) => {
 		navigator.mediaDevices
 			.getUserMedia(mediaStreamConstraints)
 			.then(audioStream => {
 				const audioChunks: Blob[] = []
-				const mediaRecorder = new MediaRecorder(audioStream)
+				const mediaRecorder = new MediaRecorder(
+					audioStream,
+					mediaRecorderOptions,
+				)
+
 				mediaRecorder.start()
 
 				setMediaRecorder(mediaRecorder)
@@ -36,18 +47,24 @@ export const useAudioRecorder = () => {
 				}
 
 				mediaRecorder.onstop = async () => {
-					console.log('stopp')
-					const audioBlob = new Blob(audioChunks, { type: 'audio/ogg;' })
-					const audioUrl = URL.createObjectURL(audioBlob)
-					const audioBase64 = await blobToBase64(audioBlob)
+					const audioBlob = new Blob(audioChunks)
+					const audioWav = await convertToWAV(audioBlob)
+					const audioUrl = URL.createObjectURL(audioWav)
 
-					onStopCallback(audioUrl, audioBase64)
+					audioStream.getTracks().forEach(track => track.stop())
+
+					onStopCallback(audioUrl, audioWav)
+				}
+
+				mediaRecorder.onerror = event => {
+					console.error('MediaRecorder error:', event)
+					setStatus('inactive')
+					audioStream.getTracks().forEach(track => track.stop())
 				}
 			})
 	}
 
 	const stopRecording = () => {
-		console.log(mediaRecorder(), 'media recorder')
 		if (mediaRecorder()) {
 			setStatus('stopped')
 			mediaRecorder()!.stop()

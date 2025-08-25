@@ -1,9 +1,9 @@
-import Main from '@/components/Main'
+import Recognition from '@/components/Recognition'
 
 const App = () => {
 	return (
 		<div class="app">
-			<Main />
+			<Recognition />
 		</div>
 	)
 }
