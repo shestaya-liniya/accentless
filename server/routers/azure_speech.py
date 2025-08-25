@@ -66,7 +66,7 @@ WaveHeader16K16BitMono = bytes(
     ]
 )
 
-@azure_router.route("/gettoken", methods=["POST"])
+@azure_router.route("/getToken", methods=["POST"])
 def gettoken():
     # Token is needed to communicate with Azure API client side, for example in case of real time recognition 
     fetch_token_url = 'https://%s.api.cognitive.microsoft.com/sts/v1.0/issueToken' %region
@@ -80,7 +80,7 @@ def gettoken():
 @azure_router.route("/analyzeSpeech", methods=["POST"])
 def analyzeSpeech():
     f = request.files['audio_data']
-    reference_text = request.form.get("reftext")
+    reference_text = request.form.get("sample_text")
 
     # a generator which reads audio data chunk by chunk
     # the audio_source can be any audio input stream which provides read() method, e.g. audio file, microphone, memory stream, etc.
