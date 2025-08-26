@@ -113,7 +113,7 @@ const VoiceVisualizer = (props: OwnProps) => {
 	const getCircleScale = (): number => {
 		if (hasAudioAccess() && analyser && frequencyArray) {
 			try {
-				analyser.getByteFrequencyData(frequencyArray)
+				analyser.getByteFrequencyData(frequencyArray as Uint8Array<ArrayBuffer>)
 
 				let freqSum: number = 0
 				const sampleSize: number = Math.min(255, frequencyArray.length)

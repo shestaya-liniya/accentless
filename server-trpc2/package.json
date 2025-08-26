@@ -23,8 +23,6 @@
 	"dependencies": {
 		"@trpc/client": "^11.5.0",
 		"@trpc/server": "^11.5.0",
-		"csv-parser": "^3.2.0",
-		"phonemize": "^1.1.0",
 		"zod": "^4.1.1"
 	}
 }

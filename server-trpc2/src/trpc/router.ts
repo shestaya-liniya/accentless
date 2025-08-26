@@ -1,5 +1,5 @@
-import { sample } from './api/sample/sample.controller'
-import { router } from './trpc'
+import { sample } from '../api/sample/sample.controller'
+import { router } from '.'
 
 export const appRouter = router({
 	sample,

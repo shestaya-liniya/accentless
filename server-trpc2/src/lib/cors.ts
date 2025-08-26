@@ -1,4 +1,4 @@
-import type { Env } from '.'
+import type { Env } from '../trpc/context'
 
 function isOriginAllowed(
 	origin: string | null,

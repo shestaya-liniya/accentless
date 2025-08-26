@@ -4,9 +4,15 @@
 		{
 			"label": "TS Watch Client",
 			"type": "shell",
-			"command": "cd client && tsc --build --noEmit --watch",
+			"command": "tsc --build --noEmit --watch",
 			"isBackground": true,
-			"problemMatcher": "$tsc-watch",
+			"problemMatcher": {
+				"base": "$tsc-watch",
+				"fileLocation": ["relative", "${workspaceFolder}/client"]
+			},
+			"options": {
+				"cwd": "./client"
+			},
 			"runOptions": {
 				"runOn": "folderOpen"
 			}

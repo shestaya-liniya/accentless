@@ -3,11 +3,11 @@
 	"name": "accentless-server",
 	"main": "src/index.ts",
 	"compatibility_date": "2025-05-05",
-	"assets": {
-		"directory": "./assets",
-		"binding": "ASSETS"
-	},
 	"vars": {
 		"CLIENT_ORIGIN": "http://localhost:1234"
+	},
+	"assets": {
+		"directory": "./public",
+		"binding": "ASSETS"
 	}
 }

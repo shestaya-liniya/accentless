@@ -7,7 +7,7 @@ import type {
 	GetSampleResponse,
 } from './types'
 
-class AiApi {
+class Api {
 	private instance: AxiosInstance
 
 	constructor() {
@@ -37,4 +37,4 @@ class AiApi {
 	}
 }
 
-export default new AiApi()
+export default new Api()

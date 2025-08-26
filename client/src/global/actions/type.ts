@@ -1,4 +1,4 @@
-import type { GetAccuracyFromRecordedAudioBody } from '@/api/ai/types'
+import type { GetAccuracyFromRecordedAudioBody } from '@/api/types'
 import type { NoneToVoid, SampleDifficultyType } from '@/lib/type'
 
 import type { GlobalState } from '../type'

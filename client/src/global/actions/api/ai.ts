@@ -1,4 +1,4 @@
-import AiApi from '@/api/ai'
+import Api from '@/api'
 import { setGlobalState } from '@/global'
 import { addActionHandler } from '@/global/actions'
 
@@ -9,7 +9,7 @@ addActionHandler('fetchSamplePhrase', async (global, _actions, payload) => {
 		result: undefined,
 	})
 
-	const res = await AiApi.getSample({
+	const res = await Api.getSample({
 		category: global.difficulty,
 		language: global.lang,
 	})
@@ -36,7 +36,7 @@ addActionHandler(
 			status: 'processing',
 		})
 
-		const res = await AiApi.getAccuracyFromRecordedAudio(payload)
+		const res = await Api.getAccuracyFromRecordedAudio(payload)
 
 		if (res.RecognitionStatus !== 'Success') {
 			setGlobalState('recognition', {

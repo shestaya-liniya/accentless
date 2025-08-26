@@ -6,6 +6,7 @@
 		"module": "ESNext",
 		"lib": ["ES2022", "DOM", "DOM.Iterable"],
 		"skipLibCheck": true,
+		"skipDefaultLibCheck": true,
 
 		/* Bundler mode */
 		"moduleResolution": "bundler",
@@ -15,7 +16,11 @@
 		"noEmit": true,
 		"jsx": "preserve",
 		"jsxImportSource": "solid-js",
-		"types": ["vite-plugin-solid-svg/types-component-solid", "vite/client"],
+		"types": [
+			"vite-plugin-solid-svg/types-component-solid",
+			"vite/client",
+			"@cloudflare/workers-types" // Needed to resolve type errors while importing things from server app
+		],
 
 		/* Linting */
 		"strict": true,
@@ -27,8 +32,10 @@
 
 		"baseUrl": ".",
 		"paths": {
-			"@/*": ["./src/*"]
+			"@/*": ["./src/*"],
+			"@server/*": ["../server-trpc2/src/*"]
 		}
 	},
-	"include": ["src", "eslint.config.js"]
+	"include": ["src/**/*", "eslint.config.js"],
+	"exclude": ["../server-trpc2/**/*", "../server*/**/*", "node_modules"]
 }
