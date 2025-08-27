@@ -1,10 +1,11 @@
+import type { SampleDifficultyType } from '@server/api/sample/sample.type'
 import axios, { type AxiosInstance } from 'axios'
+
+import { trpc } from '@/api/trpc'
 
 import type {
 	GetAccuracyFromRecordedAudioBody,
 	GetAccuracyFromRecordedAudioResponse,
-	GetSampleRequestBody,
-	GetSampleResponse,
 } from './types'
 
 class Api {
@@ -20,8 +21,10 @@ class Api {
 		)
 	}
 
-	async getSample(body: GetSampleRequestBody): Promise<GetSampleResponse> {
-		return this.instance.post('sample/get', body)
+	async getSample(difficulty: SampleDifficultyType) {
+		return trpc.sample.getByDifficulty.query({
+			difficulty,
+		})
 	}
 
 	async getAccuracyFromRecordedAudio(

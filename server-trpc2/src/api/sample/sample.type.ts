@@ -3,8 +3,17 @@ export type SampleWithIPA = {
 	ipa: string
 }
 
-export const SampleDifficulty: Record<number, number> = {
-	1: 5,
-	2: 12,
-	3: 50,
+export const SampleDifficulty = {
+	EASY: 1,
+	MEDIUM: 2,
+	HARD: 3,
+} as const
+
+export type SampleDifficultyType =
+	(typeof SampleDifficulty)[keyof typeof SampleDifficulty]
+
+export const SampleMaxWords: Record<SampleDifficultyType, number> = {
+	[SampleDifficulty.EASY]: 5,
+	[SampleDifficulty.MEDIUM]: 15,
+	[SampleDifficulty.HARD]: 40,
 }

@@ -1,16 +1,3 @@
-import type { SampleDifficultyType } from '@/lib/type'
-
-export type GetSampleRequestBody = {
-	category: SampleDifficultyType
-	language: string
-}
-
-export type GetSampleResponse = {
-	real_transcript: string[]
-	ipa_transcript: string
-	transcript_translation: string
-}
-
 export type GetAccuracyFromRecordedAudioBody = {
 	audio_data: Blob
 	sample_text: string

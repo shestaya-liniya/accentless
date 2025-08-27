@@ -1,4 +1,6 @@
-import type { RecognitionStatus, SampleDifficultyType } from '@/lib/type'
+import type { SampleDifficultyType } from '@server/api/sample/sample.type'
+
+import type { RecognitionStatus } from '@/lib/type'
 
 export type GlobalState = {
 	lang: 'en'
@@ -7,7 +9,7 @@ export type GlobalState = {
 	recognition: {
 		status: RecognitionStatus
 		sample?: {
-			text: string[]
+			text: string
 			ipa: string
 		}
 		result?: {

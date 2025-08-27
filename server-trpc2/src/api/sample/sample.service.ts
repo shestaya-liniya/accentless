@@ -1,6 +1,10 @@
 import { toIPA } from 'phonemize'
 
-import { SampleDifficulty, type SampleWithIPA } from './sample.type'
+import {
+	type SampleDifficultyType,
+	SampleMaxWords,
+	type SampleWithIPA,
+} from './sample.type'
 
 const EN_SENTENCES_FILE = 'sentences/data_en.csv'
 
@@ -33,8 +37,8 @@ class SampleService {
 		return filteredSentences[randomIndex]
 	}
 
-	async getSample(difficulty: number): Promise<SampleWithIPA> {
-		const maxWords = SampleDifficulty[difficulty]
+	async getSample(difficulty: SampleDifficultyType): Promise<SampleWithIPA> {
+		const maxWords = SampleMaxWords[difficulty]
 
 		const response = await this.assetsFetcher.fetch(
 			'http://localhost/' + EN_SENTENCES_FILE,

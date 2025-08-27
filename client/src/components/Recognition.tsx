@@ -35,7 +35,7 @@ const Recognition = () => {
 
 				getAccuracyFromRecordedAudio({
 					audio_data: audioWav,
-					sample_text: samplePhrase.join('.'),
+					sample_text: samplePhrase,
 				})
 			}
 
@@ -55,7 +55,7 @@ const Recognition = () => {
 		const sampleText = sampleState()?.text
 
 		if (sampleText) {
-			syntheseBrowserSpeech(sampleText.join('.'))
+			syntheseBrowserSpeech(sampleText)
 		}
 	}
 

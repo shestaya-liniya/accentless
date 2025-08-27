@@ -1,11 +1,6 @@
 import type { Component } from 'solid-js'
 import type { JSX } from 'solid-js/jsx-runtime'
 
-import type { SampleDifficulty } from '@/lib/const'
-
-export type SampleDifficultyType =
-	(typeof SampleDifficulty)[keyof typeof SampleDifficulty]
-
 export type RecognitionStatus =
 	| 'inactive'
 	| 'loading-sample'

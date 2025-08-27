@@ -1,4 +1,4 @@
-import { SampleDifficulty } from '@/lib/const'
+import { SampleDifficulty } from '@server/api/sample/sample.type'
 
 import type { GlobalState } from './type'
 

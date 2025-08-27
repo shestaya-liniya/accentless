@@ -1,7 +1,9 @@
+import type { SampleDifficultyType } from '@server/api/sample/sample.type'
+
 import Api from '@/api/index'
 import type { GetAccuracyFromRecordedAudioBody } from '@/api/types'
 import { global, setGlobalState } from '@/global'
-import type { NoneToVoid, SampleDifficultyType } from '@/lib/type'
+import type { NoneToVoid } from '@/lib/type'
 
 export const aiActions = {
 	fetchSamplePhrase: async (payload?: { callback: NoneToVoid }) => {
@@ -11,18 +13,15 @@ export const aiActions = {
 			result: undefined,
 		})
 
-		const res = await Api.getSample({
-			category: global.difficulty,
-			language: global.lang,
-		})
+		const res = await Api.getSample(global.difficulty)
 
 		payload?.callback()
 
 		setGlobalState('recognition', {
 			status: 'sample-loaded',
 			sample: {
-				text: res.real_transcript,
-				ipa: res.ipa_transcript,
+				text: res.text,
+				ipa: res.ipa,
 			},
 		})
 	},

@@ -1,3 +1,7 @@
+import {
+	SampleDifficulty,
+	type SampleDifficultyType,
+} from '@server/api/sample/sample.type'
 import { createEffect, createMemo, createSignal, on, onMount } from 'solid-js'
 
 import LanguageIcon from '@/assets/language.svg'
@@ -7,8 +11,7 @@ import Button from '@/components/ui/Button'
 import Modal, { type ModalAction } from '@/components/ui/Modal'
 import { getGlobal } from '@/global'
 import { getActions } from '@/global/actions'
-import { SampleDifficulty } from '@/lib/const'
-import type { SampleDifficultyType, XY } from '@/lib/type'
+import type { XY } from '@/lib/type'
 
 const SettingsButton = () => {
 	const global = getGlobal()
