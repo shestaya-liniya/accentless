@@ -1,37 +1,39 @@
-import Api from '@/api'
-import { setGlobalState } from '@/global'
-import { addActionHandler } from '@/global/actions'
+import Api from '@/api/index'
+import type { GetAccuracyFromRecordedAudioBody } from '@/api/types'
+import { global, setGlobalState } from '@/global'
+import type { NoneToVoid, SampleDifficultyType } from '@/lib/type'
 
-addActionHandler('fetchSamplePhrase', async (global, _actions, payload) => {
-	setGlobalState('recognition', {
-		status: 'loading-sample',
-		sample: undefined,
-		result: undefined,
-	})
+export const aiActions = {
+	fetchSamplePhrase: async (payload?: { callback: NoneToVoid }) => {
+		setGlobalState('recognition', {
+			status: 'loading-sample',
+			sample: undefined,
+			result: undefined,
+		})
 
-	const res = await Api.getSample({
-		category: global.difficulty,
-		language: global.lang,
-	})
+		const res = await Api.getSample({
+			category: global.difficulty,
+			language: global.lang,
+		})
 
-	payload?.callback()
+		payload?.callback()
 
-	setGlobalState('recognition', {
-		status: 'sample-loaded',
-		sample: {
-			text: res.real_transcript,
-			ipa: res.ipa_transcript,
-		},
-	})
-})
+		setGlobalState('recognition', {
+			status: 'sample-loaded',
+			sample: {
+				text: res.real_transcript,
+				ipa: res.ipa_transcript,
+			},
+		})
+	},
 
-addActionHandler('setSampleDifficulty', async (_global, _actions, payload) => {
-	setGlobalState('difficulty', payload)
-})
+	setSampleDifficulty: (payload: SampleDifficultyType) => {
+		setGlobalState('difficulty', payload)
+	},
 
-addActionHandler(
-	'getAccuracyFromRecordedAudio',
-	async (_global, _actions, payload) => {
+	getAccuracyFromRecordedAudio: async (
+		payload: GetAccuracyFromRecordedAudioBody,
+	) => {
 		setGlobalState('recognition', {
 			status: 'processing',
 		})
@@ -47,9 +49,7 @@ addActionHandler(
 		}
 
 		const recognitionRes = res.NBest[0]
-
 		const phonemeToScoreRecord: Record<string, number> = {}
-
 		const ipaWords: string[] = []
 
 		recognitionRes.Words.forEach(word => {
@@ -78,4 +78,4 @@ addActionHandler(
 			},
 		})
 	},
-)
+}

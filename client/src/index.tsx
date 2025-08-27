@@ -1,5 +1,4 @@
 import './index.css'
-import '@/global/actions/all'
 
 import { render } from 'solid-js/web'
 

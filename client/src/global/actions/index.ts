@@ -1,24 +1,7 @@
-import { globalState } from '..'
-import type { ActionHandler, Actions,ActionsPayload } from './type'
+import { aiActions } from '@/global/actions/api/ai'
 
-const actionHandlers: { [T in keyof ActionsPayload]?: ActionHandler<T>[] } = {}
-const actions = {} as Actions
-
-export function getActions(): Actions {
-	return actions
+const actions = {
+	...aiActions,
 }
 
-export function addActionHandler<T extends keyof ActionsPayload>(
-	name: T,
-	handler: ActionHandler<T>,
-) {
-	if (!actionHandlers[name]) {
-		actionHandlers[name] = []
-		actions[name] = ((payload: ActionsPayload[T]) => {
-			actionHandlers[name]?.forEach(h => {
-				h(globalState, actions, payload)
-			})
-		}) as Actions[T]
-	}
-	actionHandlers[name]!.push(handler)
-}
+export const getActions = () => actions
