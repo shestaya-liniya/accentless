@@ -60,7 +60,7 @@ class PronunciationAssessmentService {
 				}
 			}, 15_000)
 
-			recognizer.recognized = (s, e) => {
+			recognizer.recognized = (_, e) => {
 				if (e.result.reason === sdk.ResultReason.RecognizedSpeech) {
 					resultReceived = true
 					clearTimeout(timeout)

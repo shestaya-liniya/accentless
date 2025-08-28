@@ -36,9 +36,9 @@
 		"baseUrl": ".",
 		"paths": {
 			"@/*": ["./src/*"],
-			"@server/*": ["../server-trpc2/src/*"]
+			"@server/*": ["../server/src/*"]
 		}
 	},
 	"include": ["src/**/*", "eslint.config.js"],
-	"exclude": ["../server-trpc2/**/*", "../server*/**/*", "node_modules"]
+	"exclude": ["../server/**/*", "../server*/**/*", "node_modules"]
 }

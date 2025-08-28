@@ -22,5 +22,5 @@
 		"noUncheckedSideEffectImports": true
 	},
 	"include": ["vite.config.ts"],
-	"exclude": ["../server-trpc2/*", "node_modules"]
+	"exclude": ["../server/*", "node_modules"]
 }
