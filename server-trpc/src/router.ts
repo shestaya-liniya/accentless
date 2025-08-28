@@ -1,8 +1,0 @@
-import { sample } from './api/sample/sample.controller'
-import { router } from './trpc'
-
-export const appRouter = router({
-	sample,
-})
-
-export type AppRouter = typeof appRouter
