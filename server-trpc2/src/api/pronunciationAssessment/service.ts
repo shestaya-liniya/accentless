@@ -17,20 +17,22 @@ class PronunciationAssessmentService {
 	async performAssessment(payload: {
 		referenceText: string
 		audioFile: File
-	}): Promise<PronAsmPhonemeResponse> {
+	}): Promise<{
+		ok: boolean
+		result?: PronAsmPhonemeResponse
+	}> {
 		const speechConfig = sdk.SpeechConfig.fromSubscription(
 			this.subscriptionKey,
 			this.region,
 		)
 		speechConfig.speechRecognitionLanguage = 'en-US'
 
-		// tRPC affecting how File is processed, cf worker as well affecting how File is processed, so should make research to resolve that
-		// fromWavFileInput do not accept Uint8Array but it's somehow works
 		const audioArrayBuffer = await payload.audioFile.arrayBuffer()
-		const audioUint8Array = new Uint8Array(audioArrayBuffer)
-		const audioConfig = sdk.AudioConfig.fromWavFileInput(
-			audioUint8Array as unknown as File,
-		)
+		const pushStream = sdk.AudioInputStream.createPushStream()
+		pushStream.write(audioArrayBuffer)
+		pushStream.close()
+
+		const audioConfig = sdk.AudioConfig.fromStreamInput(pushStream)
 
 		const recognizer = new sdk.SpeechRecognizer(speechConfig, audioConfig)
 
@@ -43,33 +45,59 @@ class PronunciationAssessmentService {
 		pronAsmConfig.phonemeAlphabet = 'IPA'
 		pronAsmConfig.applyTo(recognizer)
 
-		return new Promise<PronAsmPhonemeResponse>((resolve, reject) => {
-			recognizer.recognizeOnceAsync(
-				result => {
-					recognizer.close()
+		return new Promise<{
+			ok: boolean
+			result?: PronAsmPhonemeResponse
+		}>((resolve, reject) => {
+			let resultReceived = false
 
-					if (result.reason === sdk.ResultReason.RecognizedSpeech) {
+			const timeout = setTimeout(() => {
+				if (!resultReceived) {
+					recognizer.stopContinuousRecognitionAsync(() => recognizer.close())
+					resolve({
+						ok: false,
+					})
+				}
+			}, 15_000)
+
+			recognizer.recognized = (s, e) => {
+				if (e.result.reason === sdk.ResultReason.RecognizedSpeech) {
+					resultReceived = true
+					clearTimeout(timeout)
+					recognizer.stopContinuousRecognitionAsync(() => recognizer.close())
+
+					try {
 						const rawJson = JSON.parse(
-							result.properties.getProperty(
+							e.result.properties.getProperty(
 								sdk.PropertyId.SpeechServiceResponse_JsonResult,
 							),
 						)
 
 						const validatedJson =
-							PronunciationAssessmentPhonemeGranularityResultSchema.parse(
+							PronunciationAssessmentPhonemeGranularityResultSchema.safeParse(
 								rawJson,
 							)
 
-						resolve(validatedJson)
-					} else {
-						reject(new Error(`Recognition failed: ${result.reason}`))
+						if (!validatedJson.success) {
+							recognizer.stopContinuousRecognitionAsync(() =>
+								recognizer.close(),
+							)
+							resolve({
+								ok: false,
+							})
+						}
+
+						resolve({
+							ok: true,
+							result: validatedJson.data,
+						})
+					} catch (err) {
+						reject(err)
 					}
-				},
-				err => {
-					recognizer.close()
-					reject(err)
-				},
-			)
+				}
+			}
+
+			recognizer.startContinuousRecognitionAsync()
 		})
 	}
 }

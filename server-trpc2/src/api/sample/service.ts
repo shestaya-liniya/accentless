@@ -2,8 +2,9 @@ import { toIPA } from 'phonemize'
 
 import {
 	type SampleDifficultyType,
-	SampleMaxWords,
 	type SampleWithIPA,
+	SampleWords,
+	type WordCount,
 } from './type'
 
 const EN_SENTENCES_FILE = 'sentences/data_en.csv'
@@ -23,22 +24,22 @@ class SampleService {
 			.filter(word => word.length > 0).length
 	}
 
-	private getSentencesByDifficulty(maxWords: number): string[] {
+	private getSentencesByDifficulty(count: WordCount): string[] {
 		return this.sentences.filter(sentence => {
 			const wordCount = this.countWords(sentence)
-			return wordCount <= maxWords && wordCount > 0
+			return wordCount >= count.from && wordCount <= count.to
 		})
 	}
 
-	private getRandomSentenceByDifficulty(maxWords: number): string {
-		const filteredSentences = this.getSentencesByDifficulty(maxWords)
+	private getRandomSentenceByDifficulty(count: WordCount): string {
+		const filteredSentences = this.getSentencesByDifficulty(count)
 
 		const randomIndex = Math.floor(Math.random() * filteredSentences.length)
 		return filteredSentences[randomIndex]
 	}
 
 	async getSample(difficulty: SampleDifficultyType): Promise<SampleWithIPA> {
-		const maxWords = SampleMaxWords[difficulty]
+		const wordCount = SampleWords[difficulty]
 
 		const response = await this.assetsFetcher.fetch(
 			'http://localhost/' + EN_SENTENCES_FILE,
@@ -56,8 +57,7 @@ class SampleService {
 			.filter(line => line.trim())
 			.map(sentence => sentence.trim())
 
-		const sentence = this.getRandomSentenceByDifficulty(maxWords)
-		console.log(sentence)
+		const sentence = this.getRandomSentenceByDifficulty(wordCount)
 
 		const ipa = toIPA(sentence, {
 			stripStress: true,

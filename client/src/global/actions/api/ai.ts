@@ -1,4 +1,5 @@
 import type { SampleDifficultyType } from '@server/api/sample/type'
+import toast from 'solid-toast'
 
 import Api from '@/api/index'
 import type { GetPronunciationAssessmentPayload } from '@/api/types'
@@ -37,17 +38,21 @@ export const aiActions = {
 			status: 'processing',
 		})
 
-		const res = await Api.getPronunciationAssessment(payload)
-		const asmRes = res.NBest[0]
-		const generalAsm = asmRes.PronunciationAssessment
+		const response = await Api.getPronunciationAssessment(payload)
+		const res = response.result
 
-		if (res.RecognitionStatus !== 'Success') {
+		if (!res || !response.ok || res.RecognitionStatus !== 'Success') {
 			setGlobalState('recognition', {
-				status: 'error',
-				errorMessage: res.RecognitionStatus,
+				status: 'sample-loaded',
+			})
+			toast.error("Coludn't process the recording", {
+				position: 'bottom-center',
 			})
 			return
 		}
+
+		const asmRes = res.NBest[0]
+		const generalAsm = asmRes.PronunciationAssessment
 
 		const phonemeToScoreRecord: Record<string, number> = {}
 		const ipaWords: string[] = []
