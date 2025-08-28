@@ -26,7 +26,7 @@ export const useAudioRecorder = () => {
 	}
 
 	const startRecording = (
-		onStopCallback: (audioUrl: string, audioWav: Blob) => void,
+		onStopCallback: (audioUrl: string, audioFile: File) => void,
 	) => {
 		navigator.mediaDevices
 			.getUserMedia(mediaStreamConstraints)
@@ -51,9 +51,18 @@ export const useAudioRecorder = () => {
 					const audioWav = await convertToWAV(audioBlob)
 					const audioUrl = URL.createObjectURL(audioWav)
 
+					const audioFile = new File(
+						[audioWav],
+						`recording-${Date.now()}.wav`,
+						{
+							type: 'audio/wav',
+							lastModified: Date.now(),
+						},
+					)
+
 					audioStream.getTracks().forEach(track => track.stop())
 
-					onStopCallback(audioUrl, audioWav)
+					onStopCallback(audioUrl, audioFile)
 				}
 
 				mediaRecorder.onerror = event => {

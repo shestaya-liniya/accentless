@@ -33,7 +33,6 @@
 	},
 	"dependencies": {
 		"@trpc/client": "^11.5.0",
-		"axios": "^1.11.0",
 		"solid-js": "^1.9.5"
 	}
 }

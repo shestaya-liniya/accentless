@@ -14,7 +14,7 @@ export type GlobalState = {
 		}
 		result?: {
 			accuracy: number
-			confidence: number
+			completeness: number
 			fluency: number
 			ipa: string
 			phonemesToScore: Record<string, number>

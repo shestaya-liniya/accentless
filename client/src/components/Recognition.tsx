@@ -26,7 +26,7 @@ const Recognition = () => {
 
 	const handleToggleRecording = () => {
 		if (status() !== 'recording') {
-			const handleStop = (audioUrl: string, audioWav: Blob) => {
+			const handleStop = (audioUrl: string, audioFile: File) => {
 				const samplePhrase = global.recognition.sample?.text
 				if (!samplePhrase) return
 
@@ -34,8 +34,8 @@ const Recognition = () => {
 				setUserAudio(audio)
 
 				getAccuracyFromRecordedAudio({
-					audio_data: audioWav,
-					sample_text: samplePhrase,
+					audioFile,
+					referenceText: samplePhrase,
 				})
 			}
 
@@ -106,10 +106,8 @@ const Recognition = () => {
 									<div>{ownState().result?.accuracy}</div>
 								</div>
 								<div class="flex flex-col items-center justify-center">
-									<div>Confidence</div>
-									<div>
-										{Math.round((ownState().result?.confidence ?? 0) * 100)}
-									</div>
+									<div>Completeness</div>
+									<div>{ownState().result?.completeness}</div>
 								</div>
 								<div class="flex flex-col items-center justify-center">
 									<div>Fluency</div>

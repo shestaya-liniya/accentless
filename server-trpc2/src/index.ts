@@ -3,7 +3,7 @@ import { WorkerEntrypoint } from 'cloudflare:workers'
 
 import { ENDPOINTS } from './lib/const'
 import { addCORSHeaders, handleCORSPreflight } from './lib/cors'
-import { createTRPCContext, Env } from './trpc/context'
+import { createTRPCContext, type Env } from './trpc/context'
 import { appRouter } from './trpc/router'
 
 export default class TRPCCloudflareWorkerExample extends WorkerEntrypoint<Env> {

@@ -4,7 +4,9 @@
 	"main": "src/index.ts",
 	"compatibility_date": "2025-05-05",
 	"vars": {
-		"CLIENT_ORIGIN": "http://localhost:1234"
+		"CLIENT_ORIGIN": "http://localhost:1234",
+		"AZURE_SUBSCRIPTION_KEY": "",
+		"AZURE_REGION": ""
 	},
 	"assets": {
 		"directory": "./public",

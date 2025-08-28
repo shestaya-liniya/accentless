@@ -1,7 +1,7 @@
 import type { SampleDifficultyType } from '@server/api/sample/sample.type'
 
 import Api from '@/api/index'
-import type { GetAccuracyFromRecordedAudioBody } from '@/api/types'
+import type { GetPronunciationAssessmentPayload } from '@/api/types'
 import { global, setGlobalState } from '@/global'
 import type { NoneToVoid } from '@/lib/type'
 
@@ -31,13 +31,15 @@ export const aiActions = {
 	},
 
 	getAccuracyFromRecordedAudio: async (
-		payload: GetAccuracyFromRecordedAudioBody,
+		payload: GetPronunciationAssessmentPayload,
 	) => {
 		setGlobalState('recognition', {
 			status: 'processing',
 		})
 
-		const res = await Api.getAccuracyFromRecordedAudio(payload)
+		const res = await Api.getPronunciationAssessment(payload)
+		const asmRes = res.NBest[0]
+		const generalAsm = asmRes.PronunciationAssessment
 
 		if (res.RecognitionStatus !== 'Success') {
 			setGlobalState('recognition', {
@@ -47,15 +49,17 @@ export const aiActions = {
 			return
 		}
 
-		const recognitionRes = res.NBest[0]
 		const phonemeToScoreRecord: Record<string, number> = {}
 		const ipaWords: string[] = []
 
-		recognitionRes.Words.forEach(word => {
+		asmRes.Words.forEach(word => {
 			let wordIpa = ''
 
+			if (!word.Phonemes) return
+
 			word.Phonemes.forEach(phoneme => {
-				phonemeToScoreRecord[phoneme.Phoneme] = phoneme.AccuracyScore
+				phonemeToScoreRecord[phoneme.Phoneme] =
+					phoneme.PronunciationAssessment.AccuracyScore
 				wordIpa += phoneme.Phoneme
 			})
 
@@ -69,9 +73,9 @@ export const aiActions = {
 		setGlobalState('recognition', {
 			status: 'success',
 			result: {
-				accuracy: recognitionRes.AccuracyScore,
-				confidence: recognitionRes.Confidence,
-				fluency: recognitionRes.FluencyScore,
+				accuracy: generalAsm.AccuracyScore,
+				completeness: generalAsm.CompletenessScore || 0,
+				fluency: generalAsm.FluencyScore || 0,
 				phonemesToScore: phonemeToScoreRecord,
 				ipa,
 			},

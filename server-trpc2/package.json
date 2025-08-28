@@ -10,6 +10,7 @@
 		"@cloudflare/workers-types": "^4.20250823.0",
 		"@eslint/js": "^9.34.0",
 		"@types/bun": "latest",
+		"@types/node": "^24.3.0",
 		"eslint": "^9.34.0",
 		"eslint-plugin-simple-import-sort": "^12.1.1",
 		"globals": "^16.3.0",
@@ -23,6 +24,8 @@
 	"dependencies": {
 		"@trpc/client": "^11.5.0",
 		"@trpc/server": "^11.5.0",
+		"buffer": "^6.0.3",
+		"microsoft-cognitiveservices-speech-sdk": "^1.45.0",
 		"phonemize": "^1.1.0",
 		"zod": "^4.1.1"
 	}

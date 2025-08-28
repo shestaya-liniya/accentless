@@ -3,6 +3,11 @@ export type GetAccuracyFromRecordedAudioBody = {
 	sample_text: string
 }
 
+export type GetPronunciationAssessmentPayload = {
+	referenceText: string
+	audioFile: File
+}
+
 export interface GetAccuracyFromRecordedAudioResponse {
 	DisplayText: string
 	Duration: number

@@ -19,7 +19,10 @@
 		"types": [
 			"vite-plugin-solid-svg/types-component-solid",
 			"vite/client",
-			"@cloudflare/workers-types" // Needed to resolve type errors while importing things from server app
+			// Needed to resolve type errors while importing things from server
+			"@cloudflare/workers-types",
+			"node"
+			// ---
 		],
 
 		/* Linting */

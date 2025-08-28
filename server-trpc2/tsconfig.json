@@ -12,7 +12,7 @@
 		"esModuleInterop": true,
 		"isolatedModules": true,
 		"verbatimModuleSyntax": true,
-		"types": ["@cloudflare/workers-types"]
+		"types": ["@cloudflare/workers-types", "node"]
 	},
 	"include": ["**/*.ts"],
 	"exclude": ["node_modules"]
