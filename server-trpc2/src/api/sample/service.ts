@@ -4,7 +4,7 @@ import {
 	type SampleDifficultyType,
 	SampleMaxWords,
 	type SampleWithIPA,
-} from './sample.type'
+} from './type'
 
 const EN_SENTENCES_FILE = 'sentences/data_en.csv'
 

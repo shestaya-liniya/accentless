@@ -1,7 +1,7 @@
 import z from 'zod'
 
 import { publicProcedure, router } from '../../trpc'
-import { SampleDifficulty } from './sample.type'
+import { SampleDifficulty } from './type'
 
 export const sample = router({
 	getByDifficulty: publicProcedure

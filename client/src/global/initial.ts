@@ -1,4 +1,4 @@
-import { SampleDifficulty } from '@server/api/sample/sample.type'
+import { SampleDifficulty } from '@server/api/sample/type'
 
 import type { GlobalState } from './type'
 

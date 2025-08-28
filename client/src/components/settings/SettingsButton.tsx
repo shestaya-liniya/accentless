@@ -1,7 +1,7 @@
 import {
 	SampleDifficulty,
 	type SampleDifficultyType,
-} from '@server/api/sample/sample.type'
+} from '@server/api/sample/type'
 import { createEffect, createMemo, createSignal, on, onMount } from 'solid-js'
 
 import LanguageIcon from '@/assets/language.svg'

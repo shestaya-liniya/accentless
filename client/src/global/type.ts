@@ -1,4 +1,4 @@
-import type { SampleDifficultyType } from '@server/api/sample/sample.type'
+import type { SampleDifficultyType } from '@server/api/sample/type'
 
 import type { RecognitionStatus } from '@/lib/type'
 

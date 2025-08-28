@@ -1,4 +1,4 @@
-import type { SampleDifficultyType } from '@server/api/sample/sample.type'
+import type { SampleDifficultyType } from '@server/api/sample/type'
 
 import Api from '@/api/index'
 import type { GetPronunciationAssessmentPayload } from '@/api/types'

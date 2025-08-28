@@ -1,7 +1,7 @@
 import type { FetchCreateContextFnOptions } from '@trpc/server/adapters/fetch'
 
 import PronunciationAssessment from '../api/pronunciationAssessment/service'
-import SampleService from '../api/sample/sample.service'
+import SampleService from '../api/sample/service'
 
 export interface Env {
 	CLIENT_ORIGIN: string
