@@ -18,3 +18,77 @@ In the end, I wasn’t fully satisfied with the accuracy of the MS Azure Speech 
 
 ## About
 A language learning tool which record you reading sentences, analyze the pronunciation with AI and gives a detailed review.
+
+<p align="center">
+  <img src=".gh/images/screen-1.png" width="300"/>
+  <img src=".gh/images/screen-2.png" width="300"/>
+  <img src=".gh/images/screen-3.png" width="300"/>
+</p>
+
+## Stack
+
+### Client 
+- **Framework:** [Solid.js](https://github.com/solidjs/solid)
+- **Language:** TypeScript  
+- **Styling:** TailwindCSS, Sass  
+
+### Server
+- **Framework:** [tRPC](https://trpc.io/)
+- **Language:** TypeScript  
+- **Validation:** Zod  
+- **Speech:** microsoft-cognitiveservices-speech-sdk  
+
+### Infrastructure
+- Cloudflare Workers / Pages
+
+## Local setup
+**Prerequisites**
+- MS account with API credentials (subscription key and region, [how to get it?](https://learn.microsoft.com/en-us/answers/questions/1394348/how-do-i-get-a-subscription-key))
+- [Bun](https://bun.sh/) package manager installed
+
+**Client**  
+1. From project root:
+``` bash
+cd client
+```
+2. Create `.env`:
+``` env
+VITE_API_BASE_URL=http://localhost:8787/api
+```
+3. Install deps:
+``` bash
+bun i
+```
+4. Run:
+``` bash
+bun run dev
+```
+
+**Server**
+1. From project root:
+``` bash
+cd server
+```
+2. Create `.dev.vars`:
+``` env
+AZURE_SUBSCRIPTION_KEY=YOUR_SUBCRIPTION_KEY
+AZURE_REGION=YOUR_REGION
+CLIENT_ORIGIN=http://localhost:1234
+```
+3. Install deps:
+``` bash
+bun i
+``` 
+5. Run:
+``` bash
+bun run dev
+```
+
+## Notes
+
+> [!WARNING]
+> For the moment `microsoft-cognitiveservices-speech-sdk` does not provide correct type interface for pronunciation assessment response, my implementation can be broken with time. You can track [this gh issue](https://github.com/microsoft/cognitive-services-speech-sdk-js/issues/942) which I have created about related problem.  
+
+> [!IMPORTANT]
+> As I have mentionned, MS Azure Speech API does not provide a great quality assessment for now (Summer 2025), keep that in mind.
+    
