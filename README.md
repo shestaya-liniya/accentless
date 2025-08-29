@@ -23,6 +23,7 @@ A language learning tool which record you reading sentences, analyze the pronunc
   <img src=".gh/images/screen-1.png" width="300"/>
   <img src=".gh/images/screen-2.png" width="300"/>
   <img src=".gh/images/screen-3.png" width="300"/>
+  <img src=".gh/images/screen-4.png" width="300"/>
 </p>
 
 ## Stack
