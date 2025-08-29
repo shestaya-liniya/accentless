@@ -78,6 +78,9 @@ const Recognition = () => {
 						<Match when={ownState().status === 'inactive'}>
 							<RecognitionIntro />
 						</Match>
+						<Match when={ownState().status === 'loading-sample'}>
+							<div>Loading...</div>
+						</Match>
 						<Match when={ownState().status === 'sample-loaded' && sampleState}>
 							<div class="text-2xl select-text">{sampleState()?.text}</div>
 							<div class="text-white/50 font-mono mt-2 select-text">
