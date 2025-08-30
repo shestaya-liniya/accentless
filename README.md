@@ -1,4 +1,4 @@
-## Intro
+# Accentless
 One day I was thinking about how much I hate my accent when speaking english, and I've got a thought, what if I could use the AI to help me shape it.
 The idea seemed to be very attractive and wasn't about being that awkward "AI tutor" - a soulness mannequin with uncanny valley effect, asking: "How was your day?".  
 
